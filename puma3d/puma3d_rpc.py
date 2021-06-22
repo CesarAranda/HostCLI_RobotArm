@@ -8,8 +8,9 @@
 # publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia 
 # o cualquier versión posterior.
 #
-# Puma3D se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA;
-# ni siquiera garantía implícitas por COMERCIALIZACIÓN o COMPROMISOS POR UN PROPÓSITO PARTICULAR.
+# Puma3D se distribuye con la esperanza de que sea útil, pero sin garantía alguna,
+# inclusive las implícitas por comercialización o compromisos particulares,
+# según los términos de la Licencia Pública General GNU.
 #
 # Consulte la Licencia pública general GNU para obtener más detalles.
 # Debería haber recibido una copia de la Licencia Pública General GNU junto con Puma3D.

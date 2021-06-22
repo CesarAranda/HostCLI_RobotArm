@@ -1,6 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from cmd import Cmd 
+
+# Este archivo es parte del paquete Puma3D.
+#
+# Puma3D es software libre: puede redistribuirlo y/o modificarlo
+# según los términos de la Licencia Pública General GNU
+# publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia
+# o cualquier versión posterior.
+#
+# Puma3D se distribuye con la esperanza de que sea útil, pero sin garantía alguna,
+# inclusive las implícitas por comercialización o compromisos particulares,
+# según los términos de la Licencia Pública General GNU.
+#
+# Consulte la Licencia pública general GNU para obtener más detalles.
+# Debería haber recibido una copia de la Licencia Pública General GNU junto con Puma3D.
+# Si no es así, vea <http://www.gnu.org/licenses/>.
+from cmd import Cmd
 import serial
 import time
 import logging

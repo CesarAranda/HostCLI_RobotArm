@@ -16,16 +16,9 @@
 # Debería haber recibido una copia de la Licencia Pública General GNU junto con Puma3D.
 # Si no es así, vea <http://www.gnu.org/licenses/>.
 
-class P3D_Info():
-    """Datos generales relativos al programa"""
-    name = 'Puma3D Host-CLI'
-    description = 'Interfaz de línea de comandos y Host para Control de Robot Arm'
-    version = '2.3-RC1'
-    date = '22 Junio 2021'
-    robot = 'Robot Arm de FTobbler (modificado)'
-    driver = '20sffactory Community - V061 (V0.62)'
-    author = 'César Omar Aranda'
-    alias = 'Puma3D'
-    thingiverse = 'https://www.thingiverse.com/puma_3d/designs'
-    github = 'https://github.com/CesarAranda'
-    postman = ''
+class P3D_Config():
+    """Parametros de conexion del Host"""
+    rpc_ip = 'www.xxx.yyy.zzz'
+    rpc_port = 7994
+    serial_port = '/dev/ttyACM0'
+    serial_bauds = 115200

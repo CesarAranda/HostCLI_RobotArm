@@ -24,15 +24,14 @@ import logging
 
 # Los Host deben tener direccion IP y Port fijos, y
 # coincidir con lo almacenado en la base de datos de la API.
-RPC_HOST = '192.168.1.38' 
 RPC_PORT = 7994
 
 class Puma3DRPC(object):
 
-    def __init__(self, p3d, host = RPC_HOST, port = RPC_PORT):
+    def __init__(self, p3d):
         self.p3d = p3d
-        self.host = host
-        self.port = port
+        self.host = p3d.rpc_server_ip
+        self.port = p3d.rpc_server_port
         self.socket = None
 
         try:
@@ -293,9 +292,6 @@ class Puma3DRPC(object):
         return {'coords': self.p3d.coords
                 }        
 
-
-
-
     def on_cooler(self):
         self.p3d.send_now('M106 S127')
         logging.info('RPC: Cooler ON')
@@ -303,37 +299,4 @@ class Puma3DRPC(object):
     def off_cooler(self):
         self.p3d.send_now('M107')
         logging.info('RPC: Cooler OFF')
-        
-    def get_status(self):
-        if self.p3dcli.printing:
-            eta = self.p3dcli.get_eta()
-            z = self.p3d.curlayer
-            duration, layers = self.p3d.fgcode.estimate_duration()
-        else:
-            eta = None # y coincide con p.printing False
-            z = ''
-            duration = ''
-            layers = ''
-        
-        temps = parse_temperature_report(self.p3d.tempreadings) if self.p3d.tempreadings else None
-        
-        if self.p3d.filename:
-            filename = self.p3d.filename
-            gcodes = len(self.p3d.fgcode)
-        else:
-            filename = ''
-            gcodes = 0
-                
-        return {'online': self.p3d.online,
-                'filename': filename,
-                'gcodes': gcodes,
-                'duration': duration,
-                'layers': layers,                
-                'z': z,
-                'eta': eta,
-                'temps': temps
-                }
-    
-    def set_extruder_temperature(self, targettemp):
-        logging.info('RPC: temperatura del Hotend a ' + targettemp)
-        self.p3d.send_now("M104 S" + targettemp)
+       

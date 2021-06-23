@@ -33,4 +33,12 @@
 [Video de demostración]()</br>
 [Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
 [Archivos 3D y comentarios](https://www.thingiverse.com/puma_3d/designs)</br>
-[Definición de API REST]()
+[Definición de API REST]()</br>
+
+**Configuración y Uso**
+* Modificar los parámetros de conexión requeridos por el Host en el archivo de configuración puma3d/puma3d_config.py
+* lanzar la apllicación mediante
+  - (usuario)~$ python3 [directorio de descarga]/Puma3D_robotArm/puma3dhost.py
+  - El detalle de las operaciones y eventuales errores producidos se registra en [directorio de descarga]/Puma3D_robotArm/puma3dhost.log
+
+

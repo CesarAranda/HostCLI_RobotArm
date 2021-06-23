@@ -1,5 +1,14 @@
 # HostCLI_RobotArm
 **Repositorio primario**
+* Host versiones futuras (cambios planficados)
+  - Completar funciones RPC propuestas.
+  - Opciones para pausar/continuar/detener una tarea.
+  - Control de la pinza.
+  - Funciones para configurar parámetros de operación generales.
+  - Gestión de trayectorias curvas.
+  - Gestión de sensores incorporados.
+  - Inicio/parada del servidor de streaming (cámara).
+
 * Host version 2.3 (22jun21)
   - Separación archivo de configuración.
   - Información de estado luego de cada acción en la misma interfaz

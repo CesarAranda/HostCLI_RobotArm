@@ -38,9 +38,13 @@
 **Configuración y Uso**
 * Modificar los parámetros de conexión requeridos por el Host en el archivo de configuración puma3d/puma3d_config.py
 * Para su lanzamento requiere de python 3 instalado, con los módulos
-  -   
+  - cmd
+  - xmlrpc
+  - socket
+  - traceback
+  - logging
+  - getopt
+  - colorama
 * Lanzar la apllicación mediante
   - (usuario)~$ python3 [directorio de descarga]/Puma3D_robotArm/puma3dhost.py
   - El detalle de las operaciones y eventuales errores producidos se registra en [directorio de descarga]/Puma3D_robotArm/puma3dhost.log
-
-

@@ -27,7 +27,7 @@
   - Generación de archivo con log de trabajo.
 
 * Host version 1.0 (27ago19)
-  - Implementación con operaciones de conexion/desconexion serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
+  - Implementación con operaciones de conexión/desconexión serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
 
 **Enlaces a recursos asociados**</br>
 [Video de demostración]()</br>

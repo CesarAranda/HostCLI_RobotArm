@@ -21,7 +21,7 @@
   - Implementación con operaciones de conexion/desconexion serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
 
 **Enlaces a recursos asociados**
-[Video de demostración]()
-[Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)
-[Archivos 3D y comentarios](https://www.thingiverse.com/puma_3d/designs)
+[Video de demostración]()</br>
+[Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
+[Archivos 3D y comentarios](https://www.thingiverse.com/puma_3d/designs)</br>
 [Definición de API REST]()

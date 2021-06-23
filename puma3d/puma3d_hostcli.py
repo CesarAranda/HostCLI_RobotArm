@@ -15,6 +15,7 @@
 # Consulte la Licencia pública general GNU para obtener más detalles.
 # Debería haber recibido una copia de la Licencia Pública General GNU junto con Puma3D.
 # Si no es así, vea <http://www.gnu.org/licenses/>.
+
 from cmd import Cmd
 import serial
 import time
@@ -23,6 +24,7 @@ import traceback
 import os
 from colorama import Cursor, init, Fore, Style
 from puma3d.puma3d_rpc import Puma3DRPC
+from puma3d.puma3d_config import P3D_Config
 
 class P3D_HostCLI(Cmd):
     """Interprete de Comandos para Control de RobotArm"""
@@ -35,8 +37,8 @@ class P3D_HostCLI(Cmd):
         Cmd.__init__(self)
         # Instancia de Serial conectada al robot. None cuando desconectado  
         self.connect = None
-        self.port = '/dev/ttyACM0'
-        self.bauds = 115200
+        self.port = P3D_Config.serial_port
+        self.bauds = P3D_Config.serial_bauds
         # El robot está Desconectado: al comenzar
         #   Conectado: El robot ha respondido al comando de conexion
         #   Preparado: se ha ubicado en la posicion inicial con motores encendidos
@@ -49,6 +51,8 @@ class P3D_HostCLI(Cmd):
         self.coords = None
         # Instancia de Puma3DRPC vinculada al Host. None cuando detenido
         self.rpc_server = None
+        self.rpc_server_ip = P3D_Config.rpc_ip
+        self.rpc_server_port = P3D_Config.rpc_port
         self.motors_enabled = False 
         self.camera_enabled = False 
         # Tiempo para actualizar imagenes de la camara
@@ -132,10 +136,11 @@ class P3D_HostCLI(Cmd):
         f3 = Fore.WHITE
         f4 = Style.NORMAL
         f5 = Style.NORMAL + Fore.GREEN
+        sprompt = '\n' + f2 + 'S:' + f3
         if self.rpc_server == None:
-            sprompt = f2 + 'S:' + f3 + ' No, '
+            sprompt =sprompt + ' No, '
         else:
-            sprompt = f2 + 'S:' + f3 + ' Sí, '
+            sprompt =sprompt + ' Sí, '
         sprompt = sprompt +  f2 + 'M: ' +  f3 + ('Sí' if self.motors_enabled else 'No') + ', '
         sprompt = sprompt +  f2 + 'R: ' +  f3 + self.robot_state + ', ' + f2 + 'T: ' + f3 + self.job_state + ', '
         if self.job_state in ['Cargada', 'En_proceso']:
@@ -146,36 +151,6 @@ class P3D_HostCLI(Cmd):
             sprompt = sprompt + '\n\n'
         sprompt = sprompt + f4 + f3 + 'P3D$ '
         return sprompt
-
-        # if "%" not in promptstr:
-        #     return promptstr
-        # else:
-        #     specials = {}
-        #     specials["extruder_temp"] = str(int(self.status.extruder_temp))
-        #     specials["extruder_temp_target"] = str(int(self.status.extruder_temp_target))
-        #     # port: /dev/tty* | netaddress:port
-        #     specials["port"] = self.settings.port.replace('/dev/', '')
-        #     if self.status.extruder_temp_target == 0:
-        #         specials["extruder_temp_fancy"] = str(int(self.status.extruder_temp)) + DEG
-        #     else:
-        #         specials["extruder_temp_fancy"] = "%s%s/%s%s" % (str(int(self.status.extruder_temp)), DEG, str(int(self.status.extruder_temp_target)), DEG)
-        #     if self.p.printing:
-        #         progress = int(1000 * float(self.p.queueindex) / len(self.p.mainqueue)) / 10
-        #     elif self.sdprinting:
-        #         progress = self.percentdone
-        #     else:
-        #         progress = 0.0
-        #     specials["progress"] = str(progress)
-        #     if self.p.printing or self.sdprinting:
-        #         specials["progress_fancy"] = " " + str(progress) + "%"
-        #     else:
-        #         specials["progress_fancy"] = ""
-        #     specials["red"] = "\033[31m"
-        #     specials["green"] = "\033[32m"
-        #     specials["white"] = "\033[37m"
-        #     specials["bold"] = "\033[01m"
-        #     specials["normal"] = "\033[00m"
-        #     return promptstr % specials
 
     def postcmd(self, stop, line):
         """Funcion para actualizar el prompt despues de ejecuta cada comando."""
@@ -717,11 +692,18 @@ class P3D_HostCLI(Cmd):
             logging.error(msg)
 
     def do_mcartes(self, args=''):  # 23: r=relativo,  24: a=absoluto
-        """mcartes: Mueve el extremo (efector final) las distancias (si relativo) 
-        \npara x, y, z indicadas [en mm], o las coordenadas correspondientes (si absoluto),
-        \ra partir de su posición actual y a la velocidad dada [en mm/min]
-        \rSintaxis: mcartes modo x y z [velocidad]"""
+        """mcartes: Mueve el extremo del robot (efector final) las distancias x, y, z indicadas  
+        \r[en mm] si es movimiento relativo [r], a partir de su posición actual y a la velocidad dada
+        \r[en mm/min], o a las coordenadas correspondientes, si el movimiento es absoluto [a].
+        \rSintaxis: mcartes [a|r] x y z [velocidad]"""
         msg = 'Orden mcartes '+ args + ': '
+        if args == '':
+            self.prompt_msg = 'Argumentos incorrectos.'
+            msg = msg + self.prompt_msg
+            logging.error(msg)
+            self.onecmd('help mcartes')
+            return
+
         if self.connect is not None:
             if  self.motors_enabled:
                 if self.robot_state == 'Preparado':
@@ -794,7 +776,7 @@ class P3D_HostCLI(Cmd):
                         logging.error(msg)
                         self.onecmd('help mcartes')
                 else:
-                    self.prompt_msg = 'El Robot debe estar preparado.'
+                    self.prompt_msg = 'El Robot debe estar preparado (post homing).'
                     msg = msg + self.prompt_msg
                     logging.error(msg)
             else:

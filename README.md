@@ -1,5 +1,5 @@
-# HostCLI_RobotArm
-**Repositorio primario**
+# HostCLI_RobotArm (última versión 2.3)
+**Repositorio principal**
 * Host versiones futuras (cambios planficados)
   - Completar funciones RPC propuestas.
   - Opciones para pausar/continuar/detener una tarea.

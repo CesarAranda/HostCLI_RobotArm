@@ -45,6 +45,6 @@
   - logging
   - getopt
   - colorama
-* Lanzar la aplicación mediante
+* Ejecutar la aplicación mediante
   - (usuario)~$ python3 [directorio de descarga]/Puma3D_robotArm/puma3dhost.py
   - El detalle de las operaciones y eventuales errores producidos se registra en [directorio de descarga]/Puma3D_robotArm/puma3dhost.log

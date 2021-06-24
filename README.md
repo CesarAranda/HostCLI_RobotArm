@@ -14,15 +14,15 @@ Las letras de estado en la interfaz son:
 - T: tarea a realizar por el robot (en caso de encontrarse cargada indica el nombre del archivo asociado)
 - RO: es un mensaje variable en función de la operación relizada
 
-* Cambios previstos para versiones futuras del Host
-  - Ingresar comandos usando GCode desde la interfaz.
-  - Completar funciones RPC propuestas.
-  - Opciones para pausar/continuar/detener una tarea.
-  - Control de la pinza.
-  - Funciones para configurar parámetros de operación generales.
-  - Gestión de trayectorias curvas.
-  - Gestión de sensores incorporados.
-  - Inicio/parada del servidor de streaming (cámara).
+Los cambios previstos para próximas versiones del Host:
+- Ingresar comandos usando GCode desde la interfaz.
+- Completar funciones RPC propuestas.
+- Opciones para pausar/continuar/detener una tarea.
+- Control de la pinza.
+- Funciones para configurar parámetros de operación generales.
+- Gestión de trayectorias curvas.
+- Gestión de sensores incorporados.
+- Inicio/parada del servidor de streaming (cámara).
 
 **Versiones**
 * Host version 2.3 (22jun21)

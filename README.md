@@ -1,18 +1,18 @@
 # HostCLI_RobotArm (última versión 2.3)
 **Descripción**</br>
 Aplicación Host de control de robots para el tipo brazo articulado con 3 grados de libertad, propuesto por A.Tobbler usando como driver el firmware ofrecido por 20sfffactory (ver enlaces más abajo). 
-El aspectos es el de una Interfaz de Línea de Comandos (CLI) que propone una serie de opciones de trabajo típicas.
+
+El aspectos general es el de una Interfaz de Línea de Comandos (CLI) para su uso mediante consola.
 Los 2 objetivos principales de la aplicación son:
 - Permitir realizar pruebas sobre el robot considerando una serie básica de restricciones de operación.
-- Servir de interfaz de comunicaciones con otras aplicaciones en redes IP.</br>
+- Servir de interfaz de comunicaciones con otras aplicaciones en redes IP.
 
-Entre sus características se encuentran completado automático de comandos, ayuda en línea para cada comando, incluyendo la sintaxis esperada, así como sintéticos mensajes de estado.
-Las letras de estado en la interfaz son:
-- S: servidor RPC (indica sí/no se encuentra en ejecución)
-- M: motores del robot (indica sí/no se encuentran activos)
-- R: estado del robot (indica el grado de preparación del robot)
-- T: tarea a realizar por el robot (en caso de encontrarse cargada indica el nombre del archivo asociado)
-- RO: es un mensaje variable en función de la operación relizada
+Entre otros detalles de funcionalidad se destacan el completado automático de comandos, la ayuda en línea para cada comando (incluyendo la sintaxis esperada), así como sintéticos mensajes de estado, asociados a letras visibles en la interfaz:
+- S: servidor RPC (indica sí/no se encuentra en ejecución),
+- M: motores del robot (indica sí/no se encuentran activos),
+- R: estado del robot (indica el grado de preparación del robot),
+- T: tarea (secuencia de órdenes GCode) a realizar por el robot (en caso de encontrarse cargada indica el nombre del archivo correspondiente),
+- RO: es un mensaje variable en función de la operación relizada.
 
 Los cambios previstos para próximas versiones del Host:
 - Ingresar comandos usando GCode desde la interfaz.

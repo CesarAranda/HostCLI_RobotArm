@@ -8,11 +8,12 @@ Los 2 objetivos principales de la aplicación son:
 - Permitir realizar pruebas sobre el robot considerando una serie básica de restricciones de operación.
 - Servir de interfaz de comunicaciones con otras aplicaciones en redes IP.
 
-Entre otros detalles de funcionalidad se destacan el completado automático de comandos, la ayuda en línea para cada comando (incluyendo la sintaxis esperada), así como sintéticos mensajes de estado, asociados a letras visibles en la interfaz:
+Entre otros detalles de funcionalidad se destacan el completado automático de comandos, historial de comandos que facilita la repetición de órdenes anteriores, la ayuda en línea para cada comando (incluyendo la sintaxis esperada), y la presencia de información breve de estado, asociados a letras visibles en la interfaz:
 - S: servidor RPC (indica sí/no se encuentra en ejecución),
 - M: motores del robot (indica sí/no se encuentran activos),
 - R: estado del robot (indica el grado de preparación del robot),
-- T: tarea (secuencia de órdenes GCode) a realizar por el robot (en caso de encontrarse cargada indica el nombre del archivo correspondiente),
+- T: estado de una tarea (secuencia de órdenes GCode a realizar por el robot),
+- A: en caso que una tarea se encuentre "cargada" indica el nombre del archivo correspondiente,
 - RO: es un mensaje variable en función de la operación relizada.
 
 Los cambios previstos para próximas versiones del Host:

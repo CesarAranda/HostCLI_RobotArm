@@ -46,11 +46,11 @@ Los cambios previstos para próximas versiones del Host:
   - Implementación con operaciones de conexión/desconexión serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
 
 **Enlaces a recursos asociados**</br>
-[Video de demostración] ()</br>
-[Firmware Robot Arm Community] (https://www-20sfactory.com/robot/resource#firmware)</br>
-[Definición de API REST] (https://www.getpostman.com/collections/0dbea506963e85d836dc)</br>
-[Robot ampliado y comentarios de ensamblado] (https://www.thingiverse.com/thing:3674358)</br>
-[Robot de base] (https://www.thingiverse.com/thing:1718984)</br>
+[Video de demostración]()</br>
+[Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
+[Definición de API REST](https://www.getpostman.com/collections/0dbea506963e85d836dc)</br>
+[Robot ampliado y comentarios de ensamblado](https://www.thingiverse.com/thing:3674358)</br>
+[Robot de base](https://www.thingiverse.com/thing:1718984)</br>
 
 
 **Configuración y Uso**

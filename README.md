@@ -6,6 +6,7 @@ Aplicación y y Host RPC para control de robots del tipo brazo articulado con 3 
 Si bien se toma como base de el robot propuesto por F.Tobler controlado por el firmware ofrecido por 20sfffactory (ver enlaces más abajo), el software es extensible a otros robots y drivers similares.
 
 El aspecto general es el de una Interfaz de Línea de Comandos (CLI) para su uso mediante consola.
+
 Los 2 objetivos principales de la aplicación son:
 - Permitir realizar pruebas sobre el robot considerando una serie básica de restricciones de operación.
 - Servir de interfaz de comunicaciones con otras aplicaciones en redes IP.

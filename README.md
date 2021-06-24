@@ -1,9 +1,10 @@
 # HostCLI_RobotArm (última versión 2.3)
 **Descripción**
 
-Aplicación Host de control de robots para el tipo brazo articulado con 3 grados de libertad, propuesto por F.Tobler usando como driver el firmware ofrecido por 20sfffactory (ver enlaces más abajo). 
+Aplicación y y Host RPC para control de robots del tipo brazo articulado con 3 grados de libertad.
+Si bien se toma como base de el robot propuesto por F.Tobler controlado por el firmware ofrecido por 20sfffactory (ver enlaces más abajo), el software es extensible a otros robots y drivers similares.
 
-El aspectos general es el de una Interfaz de Línea de Comandos (CLI) para su uso mediante consola.
+El aspecto general es el de una Interfaz de Línea de Comandos (CLI) para su uso mediante consola.
 Los 2 objetivos principales de la aplicación son:
 - Permitir realizar pruebas sobre el robot considerando una serie básica de restricciones de operación.
 - Servir de interfaz de comunicaciones con otras aplicaciones en redes IP.

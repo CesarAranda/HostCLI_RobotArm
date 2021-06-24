@@ -14,7 +14,6 @@ Las letras de estado en la interfaz son:
 - T: tarea a realizar por el robot (en caso de encontrarse cargada indica el nombre del archivo asociado)
 - RO: es un mensaje variable en función de la operación relizada
 
-**Versiones**
 * Cambios previstos para versiones futuras del Host
   - Ingresar comandos usando GCode desde la interfaz.
   - Completar funciones RPC propuestas.
@@ -25,6 +24,7 @@ Las letras de estado en la interfaz son:
   - Gestión de sensores incorporados.
   - Inicio/parada del servidor de streaming (cámara).
 
+**Versiones**
 * Host version 2.3 (22jun21)
   - Separación archivo de configuración.
   - Información de estado luego de cada acción en la misma interfaz

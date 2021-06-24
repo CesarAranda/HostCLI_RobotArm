@@ -45,14 +45,6 @@ Los cambios previstos para próximas versiones del Host:
 * Host version 1.0 (27ago19)
   - Implementación con operaciones de conexión/desconexión serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
 
-**Enlaces a recursos asociados**</br>
-[Video de demostración]()</br>
-[Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
-[Definición de API REST](https://www.getpostman.com/collections/0dbea506963e85d836dc)</br>
-[Robot ampliado y comentarios de ensamblado](https://www.thingiverse.com/thing:3674358)</br>
-[Robot de base](https://www.thingiverse.com/thing:1718984)</br>
-
-
 **Configuración y Uso**
 * Modificar los parámetros de conexión requeridos por el Host en el archivo de configuración puma3d/puma3d_config.py
 * Para su lanzamento requiere de python 3 instalado, con los módulos
@@ -66,3 +58,10 @@ Los cambios previstos para próximas versiones del Host:
 * Ejecutar la aplicación mediante
   - (usuario)~$ python3 [directorio de descarga]/Puma3D_robotArm/puma3dhost.py
   - El detalle de las operaciones y eventuales errores producidos se registra en [directorio de descarga]/Puma3D_robotArm/puma3dhost.log
+
+**Enlaces a recursos asociados**</br>
+[Video de demostración]()</br>
+[Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
+[Definición de API REST](https://www.getpostman.com/collections/0dbea506963e85d836dc)</br>
+[Robot ampliado y comentarios de ensamblado](https://www.thingiverse.com/thing:3674358)</br>
+[Robot de base](https://www.thingiverse.com/thing:1718984)</br>

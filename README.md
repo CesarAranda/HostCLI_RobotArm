@@ -1,6 +1,6 @@
 # HostCLI_RobotArm (última versión 2.3)
 **Descripción**</br>
-Aplicación Host de control de robots para el tipo brazo articulado con 3 grados de libertad, propuesto por A.Tobbler usando como driver el firmware ofrecido por 20sfffactory (ver enlaces más abajo). 
+Aplicación Host de control de robots para el tipo brazo articulado con 3 grados de libertad, propuesto por F.Tobler usando como driver el firmware ofrecido por 20sfffactory (ver enlaces más abajo). 
 
 El aspectos general es el de una Interfaz de Línea de Comandos (CLI) para su uso mediante consola.
 Los 2 objetivos principales de la aplicación son:
@@ -46,10 +46,12 @@ Los cambios previstos para próximas versiones del Host:
   - Implementación con operaciones de conexión/desconexión serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
 
 **Enlaces a recursos asociados**</br>
-[Video de demostración]()</br>
-[Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
-[Archivos 3D y comentarios](https://www.thingiverse.com/puma_3d/designs)</br>
-[Definición de API REST]()</br>
+[Video de demostración] ()</br>
+[Firmware Robot Arm Community] (https://www-20sfactory.com/robot/resource#firmware)</br>
+[Definición de API REST] ()</br>
+[Robot ampliado y comentarios de ensamblado] (https://www.thingiverse.com/thing:3674358)</br>
+[Robot de base] (https://www.thingiverse.com/thing:1718984)</br>
+
 
 **Configuración y Uso**
 * Modificar los parámetros de conexión requeridos por el Host en el archivo de configuración puma3d/puma3d_config.py

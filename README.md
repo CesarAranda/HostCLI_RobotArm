@@ -1,10 +1,11 @@
 # HostCLI_RobotArm (última versión 2.3)
-**Descripción**
+**Descripción**</br>
 Aplicación Host de control de robots del tipo brazo articulado con 3 grados de libertad.
 El aspectos es el de una Interfaz de Línea de Comandos (CLI) que propone una serie de opciones de trabajo típicas.
 Los 2 objetivos principales de la aplicación son:
 - Permitir realizar pruebas sobre el robot considerando una serie básica de restricciones de operación.
 - Servir de interfaz de comunicaciones con otras aplicaciones en redes IP.</br>
+
 Entre sus características se encuentran completado automático de comandos, ayuda en línea para cada comando, incluyendo la sintaxis esperada, así como sintéticos mensajes de estado.
 Las letras de estado en la interfaz son:
 - S: servidor RPC (indica sí/no se encuentra en ejecución)

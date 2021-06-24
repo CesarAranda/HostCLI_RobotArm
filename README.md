@@ -1,6 +1,6 @@
 # HostCLI_RobotArm (última versión 2.3)
 **Descripción**</br>
-Aplicación Host de control de robots del tipo brazo articulado con 3 grados de libertad.
+Aplicación Host de control de robots para el tipo brazo articulado con 3 grados de libertad, propuesto por A.Tobbler usando como driver el firmware ofrecido por 20sfffactory (ver enlaces más abajo). 
 El aspectos es el de una Interfaz de Línea de Comandos (CLI) que propone una serie de opciones de trabajo típicas.
 Los 2 objetivos principales de la aplicación son:
 - Permitir realizar pruebas sobre el robot considerando una serie básica de restricciones de operación.
@@ -20,9 +20,9 @@ Los cambios previstos para próximas versiones del Host:
 - Opciones para pausar/continuar/detener una tarea.
 - Control de la pinza.
 - Funciones para configurar parámetros de operación generales.
-- Gestión de trayectorias curvas.
 - Gestión de sensores incorporados.
 - Inicio/parada del servidor de streaming (cámara).
+- Gestión de trayectorias curvas (previa actualización del firmware).
 
 **Versiones**
 * Host version 2.3 (22jun21)

@@ -3,7 +3,7 @@
 
 Aplicación y Host RPC para control de robots del tipo brazo articulado con 3 grados de libertad.
 
-Si bien se toma como base de el robot propuesto por F.Tobler controlado por el firmware ofrecido por 20sfffactory (ver enlaces más abajo), el software es extensible a otros robots y drivers similares.
+Si bien se toma como base el robot propuesto por F.Tobler controlado por el firmware ofrecido por 20sfffactory (ver enlaces más abajo), el software es extensible a otros robots y drivers similares.
 
 El aspecto general es el de una Interfaz de Línea de Comandos (CLI) para su uso mediante consola.
 

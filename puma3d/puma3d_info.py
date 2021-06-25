@@ -20,7 +20,7 @@ class P3D_Info():
     """Datos generales relativos al programa"""
     name = 'Puma3D Host-CLI'
     description = 'Interfaz de línea de comandos y Host para Control de Robot Arm'
-    version = '2.3-RC1'
+    version = '2.3-RC'
     date = '22 Junio 2021'
     robot = 'Robot Arm de FTobbler (modificado)'
     driver = '20sffactory Community - V061 (V0.62)'
@@ -28,4 +28,4 @@ class P3D_Info():
     alias = 'Puma3D'
     thingiverse = 'https://www.thingiverse.com/puma_3d/designs'
     github = 'https://github.com/CesarAranda'
-    postman = ''
+    postman = 'https://www.getpostman.com/collections/0dbea506963e85d836dc'

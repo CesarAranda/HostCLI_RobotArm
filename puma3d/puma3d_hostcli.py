@@ -243,10 +243,8 @@ class P3D_HostCLI(Cmd):
                 self.rpc_server.shutdown()
                 self.rpc_server = None
                 misocket.close()
-            if self.motors_enabled:
                 self.do_motores('no')
-            if self.robot_state == 'Preparado':
-                self.do_desconectar_robot()
+                self.do_desconectar()
         except:
             msg = msg + '\n' + traceback.format_exc()
             logging.error(msg)
@@ -255,11 +253,11 @@ class P3D_HostCLI(Cmd):
             time.sleep(1)
         raise SystemExit
 
-    def do_conectar_robot(self, args=''):
-        """conectar_robot: Conecta al host con el robot usando un puerto y velocidad [en bps] dados
+    def do_conectar(self, args=''):
+        """conectar: Conecta al host con el robot usando un puerto y velocidad [en bps] dados
         \rValores por defecto: /dev/ttyACM0 y 115200
-        \rSintaxis: conectar_robot [puerto baudios]"""
-        msg = 'Orden conectar_robot ' + args + ': '
+        \rSintaxis: conectar [puerto baudios]"""
+        msg = 'Orden conectar ' + args + ': '
         if self.robot_state == 'Desconectado':
             timeout = None
             if args == '' or len(args.split()) <= 1:
@@ -290,9 +288,9 @@ class P3D_HostCLI(Cmd):
             msg = msg + "Sin cambios"
             logging.debug(msg)
 
-    def do_desconectar_robot(self, args):
-        """desconectar_robot: libera la conexion del host al robot"""
-        msg = 'Orden desconectar_robot '+ args + ': '
+    def do_desconectar(self, args):
+        """desconectar: libera la conexion del host al robot"""
+        msg = 'Orden desconectar '+ args + ': '
         if self.robot_state != 'Desconectado':
             try:
                 # self.connect.write(b'M18\r') # analizar conveniencia
@@ -304,6 +302,102 @@ class P3D_HostCLI(Cmd):
                 logging.error(msg)
         self.connect = None
         self.robot_state = 'Desconectado'
+
+    def ddo_gcode(self, args=''):  
+        """gcode: Ejecuta una orden bajo sintaxis g-code.
+        \rSintaxis: gcode Codigo_de_Orden [Argumento]"""
+        msg = 'Orden gcode '+ args + ': '
+        if args == '':
+            self.prompt_msg = 'Argumentos incorrectos.'
+            msg = msg + self.prompt_msg
+            logging.error(msg)
+            self.onecmd('help gcode')
+            return
+        return
+        if self.connect is not None:
+            if  self.motors_enabled:
+                if self.robot_state == 'Preparado':
+                    gc = x = y = z = speed = None
+                    values = args.split(' ')
+                    count = len(values)
+                    if count > 3 and values[0] in ['a', 'r']:
+                        mode = 'absoluto' if values[0] == 'a' else 'relativo'
+                        if mode != self.mov_mode:
+                            self.do_modo(mode)
+                        self.connect.reset_input_buffer()
+                        if mode == self.mov_mode:
+                            try:
+                                x = float(values[1])
+                                y = float(values[2])
+                                z = float(values[3])
+                                gc = ' X' + str(x) + ' Y' + str(y) + ' Z' + str(z)
+                                if count == 5:
+                                    speed = float(values[4])
+                                    gc = 'G1' + gc + ' F'+ str(speed) + '\r'
+                                else:
+                                    gc = 'G1' + gc + '\r'
+                                self.connect.write(bytearray(gc, 'utf-8'))
+                                resp = 'OTHER'
+                                while True:
+                                    ret = self.connect.readline()
+                                    reta = ret.decode("utf-8")
+                                    #logging.debug('retorno MOVE:' + reta)
+                                    if 'MOVE' in reta :
+                                        resp = reta #[0:len(reta)-1] 
+                                    elif 'FAILURE' in reta:
+                                        resp = 'FAILURE'
+                                    if "ok" in reta:
+                                        break
+                                if resp != 'FAILURE':
+                                    pos = self.parser_out20sffactory(resp)
+                                    #logging.debug("Retorna Mensaje: " + str(pos))
+                                    if pos != False:
+                                        self.prompt_msg = 'P(' + pos + ')'
+                                    else:
+                                        self.prompt_msg = 'Revise, posicion informada con error.'
+                                    self.robot_state = "Preparado"
+                                    self.motors_enabled = True
+                                    msg = msg + self.prompt_msg
+                                    logging.info(msg)
+                                else:
+                                    self.robot_state = 'Fuera de servicio' # Conectado
+                                    self.do_motores('no')
+                                    self.coords = None
+                                    self.prompt_msg = 'Robot dañado o falta energía.'
+                                    msg = msg + self.prompt_msg
+                                    logging.error(msg)
+                            except ValueError:
+                                self.prompt_msg = 'Argumentos incorrectos.'
+                                msg = msg + self.prompt_msg
+                                logging.error(msg)
+                                self.onecmd('help cartes')
+                            except:
+                                self.prompt_msg = 'Error interno.'
+                                msg = msg + self.prompt_msg + '\n\tConsigna: ' + args 
+                                trace = msg + '\n' + traceback.format_exc()
+                                logging.error(trace)
+                        else:
+                            self.prompt_msg = 'No puedo cambiarse el modo a ' + mode + '.'
+                            msg = msg + self.prompt_msg
+                            logging.error(msg)
+                    else:
+                        self.prompt_msg = 'Argumentos ' + args +' incorrectos.'
+                        msg = msg + self.prompt_msg
+                        logging.error(msg)
+                        self.onecmd('help cartes')
+                else:
+                    self.prompt_msg = 'El Robot debe estar preparado (post homing).'
+                    msg = msg + self.prompt_msg
+                    logging.error(msg)
+            else:
+                self.prompt_msg = 'Los motores deben estar encendidos.'
+                msg = msg + self.prompt_msg
+                logging.error(msg)
+        else:
+            self.prompt_msg = 'No hay conexión con el Robot.'
+            msg = msg + self.prompt_msg
+            logging.error(msg)
+
 
     def do_servidor(self, args):   # value=si|no
         """ servidor: Inicia/detiene el servidor RPC del Host
@@ -367,9 +461,9 @@ class P3D_HostCLI(Cmd):
             msg = msg + self.prompt_msg
             logging.error(msg)
 
-    def do_cargar_tarea(self, args):
-        """cargar_tarea: lee un archivo de tarea para el robot conectado"""
-        msg = 'Orden cargar_tarea '+ args + ': '
+    def do_cargar(self, args):
+        """cargar: lee un archivo de tarea para el robot conectado"""
+        msg = 'Orden cargar '+ args + ': '
         if self.robot_state != 'Trabajando':
             base_dir = self.base_dir + '/' + self.seq_dir + '/'
             if os.path.exists(base_dir):
@@ -414,13 +508,13 @@ class P3D_HostCLI(Cmd):
             msg = msg + self.prompt_msg
             logging.error(msg)
 
-    def do_procesar_tarea(self, args):  # 3
-        """procesar_tarea: Inicia una secuencia de consignas de trabajo (tarea de un robot)"""
-        msg0 = 'Orden procesar_tarea ' + args + ': '
+    def do_procesar(self, args):  # 3
+        """procesar: Inicia una secuencia de consignas de trabajo (tarea de un robot)"""
+        msg0 = 'Orden procesar ' + args + ': '
         if  self.connect is None:
             msg = '* Requiere de conexión al Robot.'
             logging.warning(msg)
-            self.do_conectar_robot()
+            self.do_conectar()
         if  self.connect is not None and not self.motors_enabled:
             msg = '* Requiere motores encendidos.'
             logging.warning(msg)
@@ -462,9 +556,9 @@ class P3D_HostCLI(Cmd):
             msg = msg0 + self.prompt_msg
             logging.error(msg)
 
-    def do_pausar_tarea(self, args):  # 4
-        """pausar_tarea: Suspende la secuencia de la tarea en ejecución"""
-        msg = 'Orden pausar_tarea '+ args + ': '
+    def ddo_pausar(self, args):  # 4
+        """pausar: Suspende la secuencia de la tarea en ejecución"""
+        msg = 'Orden pausar '+ args + ': '
         if self.job_state == 'En_proceso':
             self.job_state = 'Pausada'
             msg = msg + 'Listo.'
@@ -474,9 +568,9 @@ class P3D_HostCLI(Cmd):
             msg = msg + self.prompt_msg
             logging.error(msg)
 
-    def do_continuar_tarea(self, args):  # 5
-        """continuar_tarea: Continua la ejecución de la secuencia Pausada"""
-        msg = 'Orden continuar_tarea '+ args + ': '
+    def ddo_continuar(self, args):  # 5
+        """continuar: Continua la ejecución de la secuencia Pausada"""
+        msg = 'Orden continuar '+ args + ': '
         if self.job_state == 'Pausada':
             self.job_state = 'En_proceso'
             msg = msg + 'Listo.'
@@ -486,9 +580,9 @@ class P3D_HostCLI(Cmd):
             msg = msg + self.prompt_msg
             logging.error(msg)
 
-    def do_detener_tarea(self, args):  # 6
-        """detener_tarea: Detiene (aborta) la secuencia de la tarea en ejecución"""
-        msg = 'Orden detener_tarea '+ args + ': '
+    def ddo_detener(self, args):  # 6
+        """detener: Detiene (aborta) la secuencia de la tarea en ejecución"""
+        msg = 'Orden detener '+ args + ': '
         if self.job_state == 'En_proceso' or self.job_state == 'Pausada':
             self.job_state = 'Terminada'
             msg = msg + 'Listo.'
@@ -503,7 +597,7 @@ class P3D_HostCLI(Cmd):
         \rLimpia la tarea Cargada y libera los robots, donde el robot seleccionado trabaja"""
         msg = 'Orden reiniciar '+ args + ': '
         if self.robot_state != 'Desconectado':
-            self.do_desconectar_robot('')
+            self.do_desconectar('')
             self.robot_state = 'Desconectado'
             self.job_state = 'Nueva'
             msg = msg + 'Listo.'
@@ -593,7 +687,7 @@ class P3D_HostCLI(Cmd):
             msg = msg + 'Robot desconectado.'
             logging.error(msg)
         
-    def do_fin_carrera(self, args):  # 20
+    def ddo_fin_carrera(self, args):  # 20
         """origen_angular B|L|H
         \rMueve al punto de fin de carrera la articulación indicada (Base | Lower | Higher)"""
         msg = 'Orden fin_carrera '+ args + ': '
@@ -604,13 +698,13 @@ class P3D_HostCLI(Cmd):
             msg = msg + 'Robot desconectado.'
             logging.error(msg)
         
-    def do_mangular(self, args):  # 21
-        """mangular B|L|H angulo velocidad
+    def ddo_angular(self, args):  # 21
+        """angular B|L|H angulo velocidad
         \rMueve la articulación con desplazamiento rotacional relativo
         \run ángulo [en º sex. con signo] a la velocidad dada [mm/min]. 
         \rIdentificador de la articulación (Base|Lower|Higher). 
         \rLas opciones responden a las características del robot usado (RRR, en este caso)"""
-        msg = 'Orden mangular '+ args + ': '
+        msg = 'Orden angular '+ args + ': '
         if self.robot_state == 'Preparado':
             msg = msg + 'Listo.'
             logging.info(msg)
@@ -691,17 +785,17 @@ class P3D_HostCLI(Cmd):
             msg = msg + self.prompt_msg
             logging.error(msg)
 
-    def do_mcartes(self, args=''):  # 23: r=relativo,  24: a=absoluto
-        """mcartes: Mueve el extremo del robot (efector final) las distancias x, y, z indicadas  
+    def do_cartes(self, args=''):  # 23: r=relativo,  24: a=absoluto
+        """cartes: Mueve el extremo del robot (efector final) las distancias x, y, z indicadas  
         \r[en mm] si es movimiento relativo [r], a partir de su posición actual y a la velocidad dada
         \r[en mm/min], o a las coordenadas correspondientes, si el movimiento es absoluto [a].
-        \rSintaxis: mcartes [a|r] x y z [velocidad]"""
-        msg = 'Orden mcartes '+ args + ': '
+        \rSintaxis: cartes [a|r] x y z [velocidad]"""
+        msg = 'Orden cartes '+ args + ': '
         if args == '':
             self.prompt_msg = 'Argumentos incorrectos.'
             msg = msg + self.prompt_msg
             logging.error(msg)
-            self.onecmd('help mcartes')
+            self.onecmd('help cartes')
             return
 
         if self.connect is not None:
@@ -760,7 +854,7 @@ class P3D_HostCLI(Cmd):
                                 self.prompt_msg = 'Argumentos incorrectos.'
                                 msg = msg + self.prompt_msg
                                 logging.error(msg)
-                                self.onecmd('help mcartes')
+                                self.onecmd('help cartes')
                             except:
                                 self.prompt_msg = 'Error interno.'
                                 msg = msg + self.prompt_msg + '\n\tConsigna: ' + args 
@@ -774,7 +868,7 @@ class P3D_HostCLI(Cmd):
                         self.prompt_msg = 'Argumentos ' + args +' incorrectos.'
                         msg = msg + self.prompt_msg
                         logging.error(msg)
-                        self.onecmd('help mcartes')
+                        self.onecmd('help cartes')
                 else:
                     self.prompt_msg = 'El Robot debe estar preparado (post homing).'
                     msg = msg + self.prompt_msg
@@ -788,7 +882,7 @@ class P3D_HostCLI(Cmd):
             msg = msg + self.prompt_msg
             logging.error(msg)
 
-    def do_mpinza(self, args):  # 25
+    def ddo_mpinza(self, args):  # 25
         """mpinza magnitud velocidad
         \rMueve el efector final según la magnitud y velocidad dadas"""
         msg = 'Orden mpinza '+ args + ': '
@@ -806,7 +900,7 @@ class P3D_HostCLI(Cmd):
         msg = 'Orden verifica_conexion '+ args + ': '
         if self.robot_state == 'Desconectado':
             if args == 'si':
-                self.do_conectar_robot('')
+                self.do_conectar('')
 
         if self.robot_state in ['Conectado', 'Preparado', 'Trabajando']:
             # prueba recuperacion de datos
@@ -843,7 +937,7 @@ class P3D_HostCLI(Cmd):
         msg = 'Orden estado_sensor '+ args + ': '
         logging.info(msg)
         
-    def camara(self, args):  # 42 si, 43 no
+    def ddo_camara(self, args):  # 42 si, 43 no
         """camara: Conectar/Desconectar el servidor de stream (video). Valor por defecto: No
         \rSintaxis: camara si|no"""
         msg = 'Orden camara '+ args + ': '
@@ -852,7 +946,7 @@ class P3D_HostCLI(Cmd):
             msg = msg + 'Listo. cam: ' + str(self.camera_enabled)
             logging.info(msg)
             
-    def do_fijar_retardo(self, args):  # 50
+    def ddo_fijar_retardo(self, args):  # 50
         """fijar_retardo: configura el tiempo de espera antes de ejecutar la próxima instrucción. Valor [en s]
         \rSintaxis: fijar_retardo valor"""
         msg = 'Orden fijar_retardo '+ args + ': '
@@ -929,7 +1023,7 @@ class P3D_HostCLI(Cmd):
                     msg = msg + self.prompt_msg + '\n' + traceback.format_exc()
                     logging.error(msg)
          
-    def do_fijar_refresco(self, args):  # 53
+    def ddo_fijar_refresco(self, args):  # 53
         """fijar_refresco valor: Configurar tiempo de actualización de datos del servidor de stream. Valor del intervalo (en ms)"""
         msg = 'Orden fijar_refresco '+ args + ': '
         try:

@@ -18,7 +18,7 @@
 
 class P3D_Config():
     """Parametros de conexion del Host"""
-    rpc_ip = 'www.xxx.yyy.zzz'
+    rpc_ip = ''                     # IPv4_del_host
     rpc_port = 7994
-    serial_port = '/dev/ttyACM0'
+    serial_port = '/dev/ttyACM0'    # en Windows COM1, ...
     serial_bauds = 115200

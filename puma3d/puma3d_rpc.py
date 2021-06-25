@@ -107,29 +107,29 @@ class Puma3DRPC(object):
                 }        
 
     def job_start(self):  # 3
-        self.p3d.do_iniciar_tarea('')
-        msg = 'procesar_tarea("")'
+        self.p3d.do_procesar('')
+        msg = 'procesar("")'
         logging.info('RPC: ' + msg)
         return {'job_state': self.p3d.job_state
                 }        
 
     def job_suspend(self):  # 4
-        self.p3d.do_pausar_tarea('')
-        msg = 'pausar_tarea("")'
+        self.p3d.do_pausar('')
+        msg = 'pausar("")'
         logging.info('RPC: ' + msg)
         return {'job_state': self.p3d.job_state
                 }        
 
     def job_resume(self):  # 5
-        self.p3d.do_continuar_tarea('')
-        msg = 'continuar_tarea("")'
+        self.p3d.do_continuar('')
+        msg = 'continuar("")'
         logging.info('RPC: ' + msg)
         return {'job_state': self.p3d.job_state
                 }        
 
     def job_stop(self):  # 6
-        self.p3d.do_detener_tarea('')
-        msg = 'detener_tarea("")'
+        self.p3d.do_detener('')
+        msg = 'detener("")'
         logging.info('RPC: ' + msg)
         return {'job_state': self.p3d.job_state
                 }        
@@ -199,9 +199,9 @@ class Puma3DRPC(object):
         pos = 'r ' + str(x) + ' ' + str(y) + ' ' + str(z)
         if speed != '':
             pos = pos +  ' ' + str(speed)
-        msg = 'mcartes("' + pos + '")'
+        msg = 'cartes("' + pos + '")'
         logging.info('RPC in: ' + msg)
-        self.p3d.do_mcartes(pos)
+        self.p3d.do_cartes(pos)
         logging.info('RPC terminada')
         return {'robot_state': self.p3d.robot_state,
                 'job_state': self.p3d.job_state,
@@ -215,9 +215,9 @@ class Puma3DRPC(object):
         pos = 'a ' + str(x) + ' ' + str(y) + ' ' + str(z)
         if speed != '':
             pos = pos +  ' ' + str(speed)
-        msg = 'mcartes("' + pos + '")'
+        msg = 'cartes("' + pos + '")'
         logging.info('RPC in: ' + msg)
-        self.p3d.do_mcartes(pos)
+        self.p3d.do_cartes(pos)
         logging.info('RPC terminada')
         return {'robot_state': self.p3d.robot_state,
                 'job_state': self.p3d.job_state,

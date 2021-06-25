@@ -41,14 +41,14 @@ Los cambios previstos para próximas versiones del Host:
 
 * Host version 2.1 (08mar21)
   - Control entre opciones de menú, incorporando estados de operación del robot.
-  - Se agrega opción para la ejecucón de una tarea con prueba básica
+  - Se agrega opción CLI para la ejecución de una tarea con prueba básica (fija)
 
 * Host version 2.0 (10dic20)
   - Reescritura del código a lenguaje Python 3.
   - Generación de archivo con log de trabajo.
 
 * Host version 1.0 (27ago19)
-  - Implementación con operaciones de conexión/desconexión serie, ejecución de rutina de homing, operaciones directas recibiendo GCode.
+  - Implementación con operaciones de conexión/desconexión serie, ejecución de rutina de homing, ejecución de operaciones GCode directas usando comandos en formato propietario.
 
 **Configuración y Uso**
 * Modificar los parámetros de conexión requeridos por el Host en el archivo de configuración puma3d/puma3d_config.py

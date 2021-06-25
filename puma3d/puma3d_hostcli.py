@@ -39,11 +39,12 @@ class P3D_HostCLI(Cmd):
         self.connect = None
         self.port = P3D_Config.serial_port
         self.bauds = P3D_Config.serial_bauds
-        # El robot está Desconectado: al comenzar
+        # Estados del robot:
+        #   Desconectado: al comenzar el programa o luego de desconectar
         #   Conectado: El robot ha respondido al comando de conexion
         #   Preparado: se ha ubicado en la posicion inicial con motores encendidos
-        #   Trabajando:  El robot está ejecunado una secuencia
-        # Preparado cuando: 
+        #   Trabajando:  El robot está ejecutando una secuencia
+        #   Fuera de servicio: Robot dañado o falta energía
         self.robot_state = 'Desconectado'
         # El robot se encuentra trabajando con movimiento relativo | absoluto
         self.mov_mode = ''
@@ -67,8 +68,8 @@ class P3D_HostCLI(Cmd):
         self.base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         self.sequence = []
         self.seq_line = 0
-        # Estados de una Tarea
-        self.job_state = 'Nueva' # Nueva | Cargada | En_proceso | Pausada | Terminada
+        # Estados de una Tarea (Nueva | Cargada | En_proceso | Pausada | Terminada)
+        self.job_state = 'Nueva' 
         # El robot se encuentra trabajando en modo manual | auto
         self.job_mode = 'manual'
         # Mensaje a mostrar en el punto de entrada de ordenes
@@ -243,6 +244,7 @@ class P3D_HostCLI(Cmd):
                 self.rpc_server.shutdown()
                 self.rpc_server = None
                 misocket.close()
+                self.do_conectar()
                 self.do_motores('no')
                 self.do_desconectar()
         except:
@@ -258,7 +260,7 @@ class P3D_HostCLI(Cmd):
         \rValores por defecto: /dev/ttyACM0 y 115200
         \rSintaxis: conectar [puerto baudios]"""
         msg = 'Orden conectar ' + args + ': '
-        if self.robot_state == 'Desconectado':
+        if self.robot_state in ('Desconectado', 'Fuera de servicio'):
             timeout = None
             if args == '' or len(args.split()) <= 1:
                 port = self.port
@@ -280,7 +282,7 @@ class P3D_HostCLI(Cmd):
             except Exception:
                 self.robot_state = 'Desconectado'
                 self.motors_enabled = False
-                self.prompt_msg = 'Robot no vinculado. Verifique instalación o reinicie.'
+                self.prompt_msg = 'Robot no vinculado. Verifique instalación y/o reinicie.'
                 msg = msg + 'No es posible conectar al robot en ' + port + ' a ' + str(bauds)
                 msg = msg + '\n' + traceback.format_exc()
                 logging.error(msg)
@@ -360,7 +362,7 @@ class P3D_HostCLI(Cmd):
                                     msg = msg + self.prompt_msg
                                     logging.info(msg)
                                 else:
-                                    self.robot_state = 'Fuera de servicio' # Conectado
+                                    self.robot_state = 'Fuera de servicio' # exConectado
                                     self.do_motores('no')
                                     self.coords = None
                                     self.prompt_msg = 'Robot dañado o falta energía.'
@@ -844,7 +846,7 @@ class P3D_HostCLI(Cmd):
                                     msg = msg + self.prompt_msg
                                     logging.info(msg)
                                 else:
-                                    self.robot_state = 'Fuera de servicio' # Conectado
+                                    self.robot_state = 'Fuera de servicio' # exConectado
                                     self.do_motores('no')
                                     self.coords = None
                                     self.prompt_msg = 'Robot dañado o falta energía.'

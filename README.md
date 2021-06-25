@@ -17,7 +17,7 @@ Entre otros detalles de funcionalidad se destacan el completado automático de c
 - R: estado del robot (indica el grado de preparación del robot),
 - T: estado de una tarea (secuencia de órdenes GCode a realizar por el robot),
 - A: en caso que una tarea se encuentre "cargada" indica el nombre del archivo correspondiente,
-- RO: es un mensaje variable en función de la operación relizada.
+- RO: es un mensaje variable en función de la operación realizada.
 
 Los cambios previstos para próximas versiones del Host:
 - Ingresar comandos usando GCode desde la interfaz.

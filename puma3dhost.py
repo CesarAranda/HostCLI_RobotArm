@@ -9,7 +9,8 @@
 # o cualquier versión posterior.
 #
 # Puma3D se distribuye con la esperanza de que sea útil, pero sin garantía alguna,
-# inclusive las implícitas por comercialización o compromisos particulares.
+# inclusive las implícitas por comercialización o compromisos particulares,
+# según los términos de la Licencia Pública General GNU.
 #
 # Consulte la Licencia pública general GNU para obtener más detalles.
 # Debería haber recibido una copia de la Licencia Pública General GNU junto con Puma3D.
@@ -55,9 +56,9 @@ if __name__ == "__main__":
             print(f1 + 'Robot de base: ' + f2 + P3D_Info.robot)
             print(f1 + 'Con firmware:  ' + f2 + P3D_Info.driver)
             print(f1 + 'Autor:         ' + f2 + P3D_Info.author + f1 + ' [alias: ' + f2 + P3D_Info.alias + f1 + ']')
-            print(f1 + 'Perfil:        ' + f2 + P3D_Info.linkedlin)
             print(f1 + 'Impresión 3D:  ' + f2 + P3D_Info.thingiverse)
             print(f1 + 'Software GNU:  ' + f2 + P3D_Info.github)
+            print(f1 + 'APIs:          ' + f2 + P3D_Info.postman)
             sys.exit(0)
         elif op in ('-h', '--help'):
             print(usage)

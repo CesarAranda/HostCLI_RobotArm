@@ -65,7 +65,7 @@ Los cambios previstos para próximas versiones del Host:
   - El detalle de las operaciones y eventuales errores producidos se registra en [directorio de descarga]/Puma3D_robotArm/puma3dhost.log
 
 **Enlaces a recursos asociados**</br>
-[Video de demostración]()</br>
+[Video de demostración](https://youtu.be/gu-gkutfFFo)</br>
 [Definición de la API REST del SaaS](https://www.getpostman.com/collections/0dbea506963e85d836dc)</br>
 [Firmware Robot Arm Community](https://www-20sfactory.com/robot/resource#firmware)</br>
 [Robot ampliado y comentarios de ensamblado](https://www.thingiverse.com/thing:3674358)</br>
